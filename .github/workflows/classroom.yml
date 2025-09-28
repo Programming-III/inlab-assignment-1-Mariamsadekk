@@ -1,0 +1,51 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: File Structure Check
+      id: file-structure-check
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: File Structure Check
+        setup-command: ''
+        command: find . -maxdepth 1 -name '*.h' | wc -l
+        timeout: 10
+        max-score: 10
+    - name: Implementation File Check
+      id: implementation-file-check
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Implementation File Check
+        setup-command: ''
+        command: find . -maxdepth 1 -name '*.cpp' | wc -l
+        timeout: 10
+        max-score: 10
+    - name: Private Members Check
+      id: private-members-check
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Private Members Check
+        setup-command: ''
+        command: 'grep -c ''private:'' *.h 2>/dev/null | awk -F: ''{sum += $2} END
+          {print sum}'''
+        timeout: 10
+        max-score: 10
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        FILE-STRUCTURE-CHECK_RESULTS: "${{steps.file-structure-check.outputs.result}}"
+        IMPLEMENTATION-FILE-CHECK_RESULTS: "${{steps.implementation-file-check.outputs.result}}"
+        PRIVATE-MEMBERS-CHECK_RESULTS: "${{steps.private-members-check.outputs.result}}"
+      with:
+        runners: file-structure-check,implementation-file-check,private-members-check
