@@ -5,7 +5,7 @@
 #include <iostream>
 using namespace std;
 
-// ============== ANIMAL CLASS IMPLEMENTATION ==============
+// ============== ANIMAL CLASS IMPLEMENTATION ===============
 Animal::Animal() : name("Unknown"), age(0), isHungry(true) {}
 
 Animal::Animal(string name, int age, bool isHungry) 
