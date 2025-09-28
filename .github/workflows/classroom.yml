@@ -41,11 +41,20 @@ jobs:
           {print sum}'''
         timeout: 10
         max-score: 10
+    - name: Inheritance Test - Bird
+      id: inheritance-test-bird
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Inheritance Test - Bird
+        setup-command: g++ -std=c++11 -o zoo_system *.cpp
+        command: " ./zoo_system"
+        timeout: 10
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         FILE-STRUCTURE-CHECK_RESULTS: "${{steps.file-structure-check.outputs.result}}"
         IMPLEMENTATION-FILE-CHECK_RESULTS: "${{steps.implementation-file-check.outputs.result}}"
         PRIVATE-MEMBERS-CHECK_RESULTS: "${{steps.private-members-check.outputs.result}}"
+        INHERITANCE-TEST-BIRD_RESULTS: "${{steps.inheritance-test-bird.outputs.result}}"
       with:
-        runners: file-structure-check,implementation-file-check,private-members-check
+        runners: file-structure-check,implementation-file-check,private-members-check,inheritance-test-bird
