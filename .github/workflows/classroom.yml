@@ -46,8 +46,8 @@ jobs:
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: Inheritance Test - Bird
-        setup-command: g++ -std=c++11 -o zoo_system *.cpp
-        command: " ./zoo_system"
+        setup-command: g++ -std=c++11 -o main *.cpp
+        command: " ./main"
         timeout: 10
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
