@@ -49,6 +49,72 @@ jobs:
         setup-command: g++ -std=c++11 -o main *.cpp
         command: " ./main"
         timeout: 10
+    - name: Mammal Inheritance - Fur Display
+      id: mammal-inheritance-fur-display
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Mammal Inheritance - Fur Display
+        setup-command: g++ -std=c++11 -o main *.cpp 2>&1
+        command: "./main"
+        timeout: 10
+    - name: All Classes Declared
+      id: all-classes-declared
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: All Classes Declared
+        setup-command: ''
+        command: 'grep -c ''^class '' *.h | awk -F: ''{sum += $2} END {print sum}'''
+        timeout: 10
+    - name: Constructor Declarations
+      id: constructor-declarations
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Constructor Declarations
+        setup-command: ''
+        command: grep -E '(Animal|Mammal|Bird|Reptile|Enclosure|Visitor|Zoo)\\(\\);'
+          *.h >/dev/null 2>&1 && echo 'PASS' || echo 'FAIL'
+        timeout: 10
+    - name: Destructor Declaration
+      id: destructor-declaration
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Destructor Declaration
+        setup-command: ''
+        command: 'grep -c ''~'' *.h | awk -F: ''{sum += $2} END {if(sum >= 7) print
+          "PASS"; else print "FAIL"}'''
+        timeout: 10
+    - name: Program Execution
+      id: program-execution
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Program Execution
+        setup-command: g++ -std=c++11 -o main *.cpp 2>&1
+        command: "./main"
+        timeout: 10
+    - name: Mammal Inheritance
+      id: mammal-inheritance
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Mammal Inheritance
+        setup-command: g++ -std=c++11 -o main *.cpp 2>&1
+        command: "./main"
+        timeout: 10
+    - name: Bird Inheritance - Wing Span Display
+      id: bird-inheritance-wing-span-display
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Bird Inheritance - Wing Span Display
+        setup-command: g++ -std=c++11 -o main *.cpp 2>&1
+        command: "./main"
+        timeout: 10
+    - name: Reptile Inheritance - Venomous Display
+      id: reptile-inheritance-venomous-display
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Reptile Inheritance - Venomous Display
+        setup-command: g++ -std=c++11 -o main *.cpp 2>&1
+        command: "./main"
+        timeout: 10
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
@@ -56,5 +122,13 @@ jobs:
         IMPLEMENTATION-FILE-CHECK_RESULTS: "${{steps.implementation-file-check.outputs.result}}"
         PRIVATE-MEMBERS-CHECK_RESULTS: "${{steps.private-members-check.outputs.result}}"
         INHERITANCE-TEST-BIRD_RESULTS: "${{steps.inheritance-test-bird.outputs.result}}"
+        MAMMAL-INHERITANCE-FUR-DISPLAY_RESULTS: "${{steps.mammal-inheritance-fur-display.outputs.result}}"
+        ALL-CLASSES-DECLARED_RESULTS: "${{steps.all-classes-declared.outputs.result}}"
+        CONSTRUCTOR-DECLARATIONS_RESULTS: "${{steps.constructor-declarations.outputs.result}}"
+        DESTRUCTOR-DECLARATION_RESULTS: "${{steps.destructor-declaration.outputs.result}}"
+        PROGRAM-EXECUTION_RESULTS: "${{steps.program-execution.outputs.result}}"
+        MAMMAL-INHERITANCE_RESULTS: "${{steps.mammal-inheritance.outputs.result}}"
+        BIRD-INHERITANCE-WING-SPAN-DISPLAY_RESULTS: "${{steps.bird-inheritance-wing-span-display.outputs.result}}"
+        REPTILE-INHERITANCE-VENOMOUS-DISPLAY_RESULTS: "${{steps.reptile-inheritance-venomous-display.outputs.result}}"
       with:
-        runners: file-structure-check,implementation-file-check,private-members-check,inheritance-test-bird
+        runners: file-structure-check,implementation-file-check,private-members-check,inheritance-test-bird,mammal-inheritance-fur-display,all-classes-declared,constructor-declarations,destructor-declaration,program-execution,mammal-inheritance,bird-inheritance-wing-span-display,reptile-inheritance-venomous-display
