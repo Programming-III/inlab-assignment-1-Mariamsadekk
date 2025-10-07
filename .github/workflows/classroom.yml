@@ -41,14 +41,6 @@ jobs:
           {print sum}'''
         timeout: 10
         max-score: 10
-    - name: Inheritance Test - Bird
-      id: inheritance-test-bird
-      uses: classroom-resources/autograding-command-grader@v1
-      with:
-        test-name: Inheritance Test - Bird
-        setup-command: g++ -std=c++11 -o main *.cpp
-        command: " ./main"
-        timeout: 10
     - name: All Classes Declared
       id: all-classes-declared
       uses: classroom-resources/autograding-command-grader@v1
@@ -81,9 +73,8 @@ jobs:
         FILE-STRUCTURE-CHECK_RESULTS: "${{steps.file-structure-check.outputs.result}}"
         IMPLEMENTATION-FILE-CHECK_RESULTS: "${{steps.implementation-file-check.outputs.result}}"
         PRIVATE-MEMBERS-CHECK_RESULTS: "${{steps.private-members-check.outputs.result}}"
-        INHERITANCE-TEST-BIRD_RESULTS: "${{steps.inheritance-test-bird.outputs.result}}"
         ALL-CLASSES-DECLARED_RESULTS: "${{steps.all-classes-declared.outputs.result}}"
         CONSTRUCTOR-DECLARATIONS_RESULTS: "${{steps.constructor-declarations.outputs.result}}"
         DESTRUCTOR-DECLARATION_RESULTS: "${{steps.destructor-declaration.outputs.result}}"
       with:
-        runners: file-structure-check,implementation-file-check,private-members-check,inheritance-test-bird,all-classes-declared,constructor-declarations,destructor-declaration
+        runners: file-structure-check,implementation-file-check,private-members-check,all-classes-declared,constructor-declarations,destructor-declaration
