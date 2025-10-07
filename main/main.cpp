@@ -38,6 +38,7 @@ Mammal::Mammal(string name, int age, bool isHungry, string furColor)
 Mammal::~Mammal() {}
 
 void Mammal::display() const {
+    //display the info of the animal fur
     Animal::display();
     cout << ", Fur: " << furColor;
 }
